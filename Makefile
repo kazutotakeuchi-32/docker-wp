@@ -32,4 +32,3 @@ mysql_stop:
 	docker stop mysql
 open:
 	open http://localhost:8080
-

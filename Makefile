@@ -9,11 +9,14 @@ inspect:
 init:
 	@make mysql_init
 	@make wp_init
-	@open
+	@make open
 start: 
 	@make mysql_start
 	@make wp_start
 	@open
+stop:
+	@make mysql_stop
+	@make wp_stop
 destroy_all:
 	@make wp_destroy_all
 	@make mysql_rm
@@ -25,6 +28,8 @@ wp_start:
 	docker start wordpress
 wp_stop:
 	docker stop wordpress
+wp_exec:
+	docker exec -it wordpress bash
 wp_destroy_all:
 	@make wp_rm
 	@make wp_rmi
@@ -35,12 +40,14 @@ wp_rmi:
 mysql_init:
 	@make mysql_run
 mysql_run:
-	docker run --name mysql --network wordpress-network -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:5.7
+	docker run --platform linux/arm64  --name mysql --network wordpress-network -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mariadb
 mysql_rm:
 	docker rm  mysql
 mysql_start:
 	docker start mysql
 mysql_stop:
 	docker stop mysql
+mysql_exec:
+	docker exec -it mysql bash
 open:
 	open http://localhost:8080

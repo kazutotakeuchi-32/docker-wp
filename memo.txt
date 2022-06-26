@@ -3,6 +3,7 @@ https://knowledge.sakura.ad.jp/16082/
 
 ■ コンテナ間通信(素のdocker)
 1. Dockerネットワークを作成してコンテナ名で接続できるようにする
+docker network create [ネットワーク名]
 2.「--link」オプションを使用する
 -> レガシー
 
@@ -13,5 +14,4 @@ docker network create wordpress-network
 2.コンテナ起動
 docker run --name mysql --network wordpress-network -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:5.7
 docker run --name wordpress --network wordpress-network -e WORDPRESS_DB_PASSWORD=my-secret-pw -p 8080:80 -d wordpress
-
 

@@ -14,6 +14,9 @@ start:
 	@make mysql_start
 	@make wp_start
 	@open
+destroy_all:
+	@make wp_destroy_all
+	@make mysql_rm
 wp_init:
 	@make wp_run
 wp_run:
@@ -22,10 +25,19 @@ wp_start:
 	docker start wordpress
 wp_stop:
 	docker stop wordpress
+wp_destroy_all:
+	@make wp_rm
+	@make wp_rmi
+wp_rm:
+	docker rm wordpress
+wp_rmi:
+	docker rmi wordpress
 mysql_init:
 	@make mysql_run
 mysql_run:
 	docker run --name mysql --network wordpress-network -e MYSQL_ROOT_PASSWORD=my-secret-pw -d mysql:5.7
+mysql_rm:
+	docker rm  mysql
 mysql_start:
 	docker start mysql
 mysql_stop:
